@@ -11,7 +11,7 @@ import SwiftUI
 struct MultiFormatVideoPlayerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FileBrowserView()
         }
     }
 }

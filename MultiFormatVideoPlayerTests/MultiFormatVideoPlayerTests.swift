@@ -6,7 +6,6 @@
 //
 
 import XCTest
-@testable import MultiFormatVideoPlayer
 
 class MultiFormatVideoPlayerTests: XCTestCase {
 
