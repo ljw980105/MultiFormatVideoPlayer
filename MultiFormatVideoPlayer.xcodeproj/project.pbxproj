@@ -28,6 +28,11 @@
 		0457909D27B585CD007D2E0D /* FixedWidthSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457909C27B585CD007D2E0D /* FixedWidthSpacer.swift */; };
 		0457909F27B586D9007D2E0D /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457909E27B586D9007D2E0D /* ForwardButton.swift */; };
 		045790A127B58710007D2E0D /* BackwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A027B58710007D2E0D /* BackwardButton.swift */; };
+		045790A327B5D5BF007D2E0D /* VideoPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A227B5D5BF007D2E0D /* VideoPlayerState.swift */; };
+		045790A527B5FF28007D2E0D /* DummyVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A427B5FF28007D2E0D /* DummyVideoPlayer.swift */; };
+		045790A727B60884007D2E0D /* VideoPlayerCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A627B60884007D2E0D /* VideoPlayerCallbacks.swift */; };
+		045790AB27B60BE0007D2E0D /* CMTime+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */; };
+		045790AD27B60C7B007D2E0D /* VideoPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790AC27B60C7B007D2E0D /* VideoPlayerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +77,11 @@
 		0457909C27B585CD007D2E0D /* FixedWidthSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedWidthSpacer.swift; sourceTree = "<group>"; };
 		0457909E27B586D9007D2E0D /* ForwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
 		045790A027B58710007D2E0D /* BackwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardButton.swift; sourceTree = "<group>"; };
+		045790A227B5D5BF007D2E0D /* VideoPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerState.swift; sourceTree = "<group>"; };
+		045790A427B5FF28007D2E0D /* DummyVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyVideoPlayer.swift; sourceTree = "<group>"; };
+		045790A627B60884007D2E0D /* VideoPlayerCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerCallbacks.swift; sourceTree = "<group>"; };
+		045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMTime+Extensions.swift"; sourceTree = "<group>"; };
+		045790AC27B60C7B007D2E0D /* VideoPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +187,9 @@
 				0457908527B4DCEB007D2E0D /* VideoPlayable.swift */,
 				0457908E27B4E16B007D2E0D /* VideoPlayerContainer.swift */,
 				0457909027B4E1A8007D2E0D /* VideoPlayerContainerViewController.swift */,
+				045790A227B5D5BF007D2E0D /* VideoPlayerState.swift */,
+				045790A627B60884007D2E0D /* VideoPlayerCallbacks.swift */,
+				045790AC27B60C7B007D2E0D /* VideoPlayerDelegate.swift */,
 				0457908727B4DDCE007D2E0D /* VideoPlayers */,
 			);
 			path = VideoPlayer;
@@ -186,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				0457908827B4DDD7007D2E0D /* AvKit */,
+				045790A427B5FF28007D2E0D /* DummyVideoPlayer.swift */,
 			);
 			path = VideoPlayers;
 			sourceTree = "<group>";
@@ -212,10 +226,27 @@
 		0457909927B582E7007D2E0D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				045790A927B60BC8007D2E0D /* Views */,
+				045790A827B60BBF007D2E0D /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		045790A827B60BBF007D2E0D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		045790A927B60BC8007D2E0D /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				0457909A27B58308007D2E0D /* TappableArea.swift */,
 				0457909C27B585CD007D2E0D /* FixedWidthSpacer.swift */,
 			);
-			path = Common;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,13 +387,18 @@
 			files = (
 				0457909827B5585A007D2E0D /* PauseButton.swift in Sources */,
 				0457908127B4CC77007D2E0D /* VideoFile.swift in Sources */,
+				045790AB27B60BE0007D2E0D /* CMTime+Extensions.swift in Sources */,
 				0457909627B5554C007D2E0D /* PlayButton.swift in Sources */,
 				0457909127B4E1A8007D2E0D /* VideoPlayerContainerViewController.swift in Sources */,
 				0457907D27B4C564007D2E0D /* FileBrowserView.swift in Sources */,
 				0457909D27B585CD007D2E0D /* FixedWidthSpacer.swift in Sources */,
+				045790A327B5D5BF007D2E0D /* VideoPlayerState.swift in Sources */,
+				045790A527B5FF28007D2E0D /* DummyVideoPlayer.swift in Sources */,
 				0457907F27B4C578007D2E0D /* FileBrowserViewModel.swift in Sources */,
 				0457908A27B4DE68007D2E0D /* AvKitVideoPlayer.swift in Sources */,
+				045790AD27B60C7B007D2E0D /* VideoPlayerDelegate.swift in Sources */,
 				0457904F27B4C2B0007D2E0D /* MultiFormatVideoPlayerApp.swift in Sources */,
+				045790A727B60884007D2E0D /* VideoPlayerCallbacks.swift in Sources */,
 				0457908627B4DCEB007D2E0D /* VideoPlayable.swift in Sources */,
 				0457908F27B4E16B007D2E0D /* VideoPlayerContainer.swift in Sources */,
 				0457908427B4D725007D2E0D /* VideoPlayerView.swift in Sources */,

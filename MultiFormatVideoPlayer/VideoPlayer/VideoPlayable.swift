@@ -8,18 +8,20 @@
 import Foundation
 import UIKit
 
-class VideoPlayable: UIView {
-    let videoFile: VideoFile
+protocol VideoPlayable where Self: UIView {
+    var videoFile: VideoFile { get set }
+    var delegate: VideoPlayerDelegate? { get set }
     
-    init(videoFile: VideoFile) {
-        self.videoFile = videoFile
-        super.init(frame: .zero)
+    func play()
+    func pause()
+    func goForwardFifteenSeconds()
+    func goBackwardsFifteenSeconds()
+    func update(isPlaying: Bool)
+    func update(progress: Double)
+}
+
+extension VideoPlayable {
+    func update(isPlaying: Bool) {
+        isPlaying ? play() : pause()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func play() {}
-    func pause() {}
 }

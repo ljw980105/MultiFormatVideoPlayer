@@ -9,46 +9,68 @@ import SwiftUI
 
 struct VideoPlayerView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var isUnSupported = false
-    @State var isPlaying = false
+    @State var isUnsupported = false
+    @StateObject var state: VideoPlayerState = .init()
     let file: VideoFile
+    let callbacks: VideoPlayerCallbacks
     
     init(file: VideoFile) {
         self.file = file
+        self.callbacks = .init()
     }
     
     var body: some View {
         ZStack {
-            VideoPlayerContainer(videoFile: file)
+            VideoPlayerContainer(
+                videoFile: file,
+                callbacks: callbacks,
+                isPlaying: $state.isPlaying,
+                playHeadPosition: $state.playHeadPosition,
+                totalDuration: $state.totalDuration,
+                progress: $state.progress
+            )
             VStack {
                 HStack {
                     Button("Dismiss") {
                         presentationMode.wrappedValue.dismiss()
                     }
-                    Spacer()
+                    FixedWidthSpacer(length: 20)
+                    Slider(value: $state.progress, onEditingChanged: { isEditing in
+                        isEditing ? callbacks.startedDraggingSlider?() : callbacks.endedDraggingSlider?()
+                    })
                 }
                 Spacer()
                 HStack {
                     Spacer()
-                    HStack {
-                        FixedWidthSpacer(length: 20)
-                        ForwardButton()
-                        FixedWidthSpacer(length: 40)
-                        ZStack {
-                            PlayButton()
-                                .opacity(isPlaying ? 0 : 1)
-                            PauseButton()
-                                .opacity(isPlaying ? 1 : 0)
-                            TappableArea(width: 70, height: 70)
+                    VStack {
+                        Text(file.fileName)
+                            .font(.headline)
+                        HStack {
+                            FixedWidthSpacer(length: 20)
+                            BackwardButton()
                                 .onTapGesture {
-                                    isPlaying.toggle()
+                                    callbacks.seekBackward?()
                                 }
+                            FixedWidthSpacer(length: 40)
+                            ZStack {
+                                PlayButton()
+                                    .opacity(state.isPlaying ? 0 : 1)
+                                PauseButton()
+                                    .opacity(state.isPlaying ? 1 : 0)
+                                TappableArea(width: 40, height: 40)
+                                    .onTapGesture {
+                                        state.isPlaying.toggle()
+                                    }
+                            }
+                            FixedWidthSpacer(length: 40)
+                            ForwardButton()
+                                .onTapGesture {
+                                    callbacks.seekForward?()
+                                }
+                            FixedWidthSpacer(length: 20)
                         }
-                        FixedWidthSpacer(length: 40)
-                        BackwardButton()
-                        FixedWidthSpacer(length: 20)
                     }
-                        .padding(5)
+                        .padding(.init(top: 5, leading: 5, bottom: 10, trailing: 5))
                         .background(.thinMaterial)
                         .cornerRadius(20)
                     Spacer()
@@ -56,10 +78,10 @@ struct VideoPlayerView: View {
             }
         }
         .onAppear {
-            isUnSupported = file.ext == .unknown
+            isUnsupported = file.ext == .unknown
         }
         .padding(20)
-        .alert("This video format is not supported", isPresented: $isUnSupported) {
+        .alert("This video format is not supported", isPresented: $isUnsupported) {
             Button("OK", role: .cancel) { }
         }
     }

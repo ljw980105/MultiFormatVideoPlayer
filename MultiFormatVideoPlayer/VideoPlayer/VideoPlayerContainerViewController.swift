@@ -11,27 +11,33 @@ import SnapKit
 class VideoPlayerContainerViewController: UIViewController {
     let videoView: VideoPlayable
     
-    init(videoFile: VideoFile) {
-        self.videoView = videoFile.makeView()
+    init(videoFile: VideoFile, delegate: VideoPlayerDelegate) {
+        videoView = videoFile.makeView()
         super.init(nibName: nil, bundle: nil)
         view.addSubview(videoView)
         videoView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        videoView.delegate = delegate
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    func update(isPlaying: Bool) {
+        videoView.update(isPlaying: isPlaying)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        videoView.play()
+    func update(progress: Double) {
+        videoView.update(progress: progress)
+    }
+    
+    func seekForward() {
+        videoView.goForwardFifteenSeconds()
+    }
+    
+    func seekBackward() {
+        videoView.goBackwardsFifteenSeconds()
     }
 }

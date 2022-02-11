@@ -22,7 +22,7 @@ struct VideoFile {
     
     func makeView() -> VideoPlayable {
         ext.supportedVideoPlayer?.makeView(videoFile: .init(url: url))
-        ?? VideoPlayable(videoFile: .init(url: url))
+        ?? DummyVideoPlayer(videoFile: .init(url: url))
     }
 }
 
