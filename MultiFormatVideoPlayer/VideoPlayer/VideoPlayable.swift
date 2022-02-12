@@ -10,7 +10,7 @@ import UIKit
 
 protocol VideoPlayable where Self: UIView {
     var videoFile: VideoFile { get set }
-    var delegate: VideoPlayerDelegate? { get set }
+    var currentState: VideoPlayerPlayheadState { get }
     
     func play()
     func pause()
@@ -24,4 +24,11 @@ extension VideoPlayable {
     func update(isPlaying: Bool) {
         isPlaying ? play() : pause()
     }
+}
+
+struct VideoPlayerPlayheadState {
+    /// value ranges from 0 to 1
+    let progress: Double
+    
+    static let `default`: VideoPlayerPlayheadState = .init(progress: 0)
 }

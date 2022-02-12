@@ -11,14 +11,13 @@ import SnapKit
 class VideoPlayerContainerViewController: UIViewController {
     let videoView: VideoPlayable
     
-    init(videoFile: VideoFile, delegate: VideoPlayerDelegate) {
+    init(videoFile: VideoFile) {
         videoView = videoFile.makeView()
         super.init(nibName: nil, bundle: nil)
         view.addSubview(videoView)
         videoView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        videoView.delegate = delegate
     }
     
     required init?(coder: NSCoder) {
@@ -39,5 +38,9 @@ class VideoPlayerContainerViewController: UIViewController {
     
     func seekBackward() {
         videoView.goBackwardsFifteenSeconds()
+    }
+    
+    var currentState: VideoPlayerPlayheadState {
+        videoView.currentState
     }
 }

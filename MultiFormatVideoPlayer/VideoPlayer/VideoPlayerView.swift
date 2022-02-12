@@ -24,10 +24,7 @@ struct VideoPlayerView: View {
             VideoPlayerContainer(
                 videoFile: file,
                 callbacks: callbacks,
-                isPlaying: $state.isPlaying,
-                playHeadPosition: $state.playHeadPosition,
-                totalDuration: $state.totalDuration,
-                progress: $state.progress
+                isPlaying: $state.isPlaying
             )
             VStack {
                 HStack {
@@ -36,7 +33,14 @@ struct VideoPlayerView: View {
                     }
                     FixedWidthSpacer(length: 20)
                     Slider(value: $state.progress, onEditingChanged: { isEditing in
-                        isEditing ? callbacks.startedDraggingSlider?() : callbacks.endedDraggingSlider?()
+                        if isEditing {
+                            stopTimer()
+                            state.isPlaying = false
+                        } else {
+                            startTimer()
+                            state.isPlaying = true
+                            callbacks.updateProgress?(state.progress)
+                        }
                     })
                 }
                 Spacer()
@@ -79,10 +83,29 @@ struct VideoPlayerView: View {
         }
         .onAppear {
             isUnsupported = file.ext == .unknown
+            stopTimer()
+            startTimer()
+        }
+        .onDisappear {
+            stopTimer()
         }
         .padding(20)
         .alert("This video format is not supported", isPresented: $isUnsupported) {
-            Button("OK", role: .cancel) { }
+            Button("OK", role: .cancel) {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+    }
+    
+    func stopTimer() {
+        state.timer?.invalidate()
+    }
+    
+    func startTimer() {
+        state.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            if let state = callbacks.getCurrentState?() {
+                self.state.process(state: state)
+            }
         }
     }
 }

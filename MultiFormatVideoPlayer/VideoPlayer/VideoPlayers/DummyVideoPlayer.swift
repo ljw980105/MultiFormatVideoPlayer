@@ -10,7 +10,6 @@ import UIKit
 
 class DummyVideoPlayer: UIView, VideoPlayable {
     var videoFile: VideoFile
-    weak var delegate: VideoPlayerDelegate?
     
     init(videoFile: VideoFile) {
         self.videoFile = videoFile
@@ -39,5 +38,9 @@ class DummyVideoPlayer: UIView, VideoPlayable {
     
     func update(progress: Double) {
         
+    }
+    
+    var currentState: VideoPlayerPlayheadState {
+        .default
     }
 }

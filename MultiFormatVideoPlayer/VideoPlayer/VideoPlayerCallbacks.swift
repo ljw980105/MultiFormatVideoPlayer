@@ -10,6 +10,6 @@ import Foundation
 class VideoPlayerCallbacks {
     var seekForward: (() -> Void)?
     var seekBackward: (() -> Void)?
-    var startedDraggingSlider: (() -> Void)?
-    var endedDraggingSlider: (() -> Void)?
+    var getCurrentState: (() -> VideoPlayerPlayheadState)?
+    var updateProgress: ((Double) -> Void)?
 }
