@@ -23,12 +23,21 @@ protocol VideoPlayable where Self: UIView {
 extension VideoPlayable {
     func update(isPlaying: Bool) {
         isPlaying ? play() : pause()
+        UIApplication.shared.isIdleTimerDisabled = isPlaying
     }
 }
 
 struct VideoPlayerPlayheadState {
     /// value ranges from 0 to 1
     let progress: Double
+    /// in seconds
+    let currentTime: Double
+    /// in seconds
+    let remainingTime: Double
     
-    static let `default`: VideoPlayerPlayheadState = .init(progress: 0)
+    static let `default`: VideoPlayerPlayheadState = .init(
+        progress: 0,
+        currentTime: 0,
+        remainingTime: 0
+    )
 }

@@ -63,9 +63,14 @@ class AvKitVideoPlayer: UIView, VideoPlayable {
     
     var currentState: VideoPlayerPlayheadState {
         let currentTime = player.currentTime()
-        guard let asset = player.currentItem?.asset else {
+        guard let asset = player.currentItem?.asset,
+              let totalDuration = player.currentItem?.duration else {
             return .default
         }
-        return .init(progress: currentTime.double / asset.duration.double)
+        return .init(
+            progress: currentTime.double / asset.duration.double,
+            currentTime: currentTime.double,
+            remainingTime: (totalDuration - currentTime).double
+        )
     }
 }
