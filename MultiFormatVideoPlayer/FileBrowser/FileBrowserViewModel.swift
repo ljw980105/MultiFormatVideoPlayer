@@ -25,4 +25,20 @@ class FileBrowserViewModel: ObservableObject {
         }
         
     }
+    
+    func deleteVideo(at indexSet: IndexSet) {
+        let file = files[indexSet.index]
+        do {
+            try FileManager.default.removeItem(at: file.url)
+        } catch {
+            print(error)
+        }
+        files.remove(atOffsets: indexSet)
+    }
+}
+
+extension IndexSet {
+    var index: Int {
+        self[startIndex]
+    }
 }

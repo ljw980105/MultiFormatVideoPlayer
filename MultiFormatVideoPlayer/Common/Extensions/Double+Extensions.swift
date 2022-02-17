@@ -9,6 +9,7 @@ import Foundation
 
 extension Double {
     var timeString: String {
+        guard !isNaN else { return "00:00:00" }
         let hours = String(Int(self) / 3600)
         let secondsRemainingAfterHours = Int(self) % 3600
         let minute = String(secondsRemainingAfterHours / 60)

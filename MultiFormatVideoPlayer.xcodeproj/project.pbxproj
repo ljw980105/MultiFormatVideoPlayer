@@ -28,7 +28,7 @@
 		0457909D27B585CD007D2E0D /* FixedWidthSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457909C27B585CD007D2E0D /* FixedWidthSpacer.swift */; };
 		0457909F27B586D9007D2E0D /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457909E27B586D9007D2E0D /* ForwardButton.swift */; };
 		045790A127B58710007D2E0D /* BackwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A027B58710007D2E0D /* BackwardButton.swift */; };
-		045790A327B5D5BF007D2E0D /* VideoPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A227B5D5BF007D2E0D /* VideoPlayerState.swift */; };
+		045790A327B5D5BF007D2E0D /* VideoPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A227B5D5BF007D2E0D /* VideoPlayerViewModel.swift */; };
 		045790A527B5FF28007D2E0D /* DummyVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A427B5FF28007D2E0D /* DummyVideoPlayer.swift */; };
 		045790A727B60884007D2E0D /* VideoPlayerCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790A627B60884007D2E0D /* VideoPlayerCallbacks.swift */; };
 		045790AB27B60BE0007D2E0D /* CMTime+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */; };
@@ -78,7 +78,7 @@
 		0457909C27B585CD007D2E0D /* FixedWidthSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedWidthSpacer.swift; sourceTree = "<group>"; };
 		0457909E27B586D9007D2E0D /* ForwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
 		045790A027B58710007D2E0D /* BackwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardButton.swift; sourceTree = "<group>"; };
-		045790A227B5D5BF007D2E0D /* VideoPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerState.swift; sourceTree = "<group>"; };
+		045790A227B5D5BF007D2E0D /* VideoPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModel.swift; sourceTree = "<group>"; };
 		045790A427B5FF28007D2E0D /* DummyVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyVideoPlayer.swift; sourceTree = "<group>"; };
 		045790A627B60884007D2E0D /* VideoPlayerCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerCallbacks.swift; sourceTree = "<group>"; };
 		045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMTime+Extensions.swift"; sourceTree = "<group>"; };
@@ -184,14 +184,14 @@
 		0457908227B4D675007D2E0D /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				0457908727B4DDCE007D2E0D /* VideoPlayers */,
 				0457909427B55532007D2E0D /* Buttons */,
 				0457908327B4D725007D2E0D /* VideoPlayerView.swift */,
 				0457908527B4DCEB007D2E0D /* VideoPlayable.swift */,
 				0457908E27B4E16B007D2E0D /* VideoPlayerContainer.swift */,
 				0457909027B4E1A8007D2E0D /* VideoPlayerContainerViewController.swift */,
-				045790A227B5D5BF007D2E0D /* VideoPlayerState.swift */,
+				045790A227B5D5BF007D2E0D /* VideoPlayerViewModel.swift */,
 				045790A627B60884007D2E0D /* VideoPlayerCallbacks.swift */,
-				0457908727B4DDCE007D2E0D /* VideoPlayers */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";
@@ -396,7 +396,7 @@
 				0457909127B4E1A8007D2E0D /* VideoPlayerContainerViewController.swift in Sources */,
 				0457907D27B4C564007D2E0D /* FileBrowserView.swift in Sources */,
 				0457909D27B585CD007D2E0D /* FixedWidthSpacer.swift in Sources */,
-				045790A327B5D5BF007D2E0D /* VideoPlayerState.swift in Sources */,
+				045790A327B5D5BF007D2E0D /* VideoPlayerViewModel.swift in Sources */,
 				045790A527B5FF28007D2E0D /* DummyVideoPlayer.swift in Sources */,
 				045790AF27B768E1007D2E0D /* Double+Extensions.swift in Sources */,
 				0457907F27B4C578007D2E0D /* FileBrowserViewModel.swift in Sources */,
@@ -573,6 +573,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MultiFormatVideoPlayer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Videos;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -604,6 +605,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MultiFormatVideoPlayer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Videos;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

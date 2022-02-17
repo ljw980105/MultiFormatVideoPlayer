@@ -22,6 +22,9 @@ struct FileBrowserView: View {
                         VideoPlayerView(file: file)
                     }
                 }
+                .onDelete { indexSet in
+                    viewModel.deleteVideo(at: indexSet)
+                }
             }
             .navigationTitle("Videos")
         }

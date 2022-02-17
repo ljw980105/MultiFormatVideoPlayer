@@ -14,6 +14,10 @@ class VideoPlayerContainerViewController: UIViewController {
     init(videoFile: VideoFile) {
         videoView = videoFile.makeView()
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         view.addSubview(videoView)
         videoView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

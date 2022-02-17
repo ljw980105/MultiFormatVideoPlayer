@@ -26,7 +26,7 @@ fileprivate enum Styles {
     static var doneButtonGraident: Gradient {
         Gradient(stops: [
             .init(color: Color(red: 125/255, green: 153/255, blue: 227/255), location: 0),
-            .init(color: Color(red: 53/255, green: 97/255, blue: 213/255), location: 0.7)
+            .init(color: Color(red: 53/255, green: 97/255, blue: 213/255), location: 0.5)
         ])
     }
     static var thumbRadius: CGFloat { 30 }
@@ -35,7 +35,7 @@ fileprivate enum Styles {
 struct VideoPlayerView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var isUnsupported = false
-    @StateObject var state: VideoPlayerState = .init()
+    @StateObject var viewModel: VideoPlayerViewModel = .init()
     let file: VideoFile
     let callbacks: VideoPlayerCallbacks
     
@@ -50,11 +50,12 @@ struct VideoPlayerView: View {
                 VideoPlayerContainer(
                     videoFile: file,
                     callbacks: callbacks,
-                    isPlaying: $state.isPlaying
+                    isPlaying: $viewModel.isPlaying
                 )
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.3)) {
-                            state.isControlsHidden.toggle()
+                            viewModel.isControlsHidden.toggle()
+                            viewModel.autoHideUI()
                         }
                     }
                 VStack {
@@ -64,34 +65,46 @@ struct VideoPlayerView: View {
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             Text("Done")
+                                .font(.headline)
                                 .padding(10)
                                 .background(LinearGradient(gradient: Styles.doneButtonGraident, startPoint: .top, endPoint: .bottom))
                                 .cornerRadius(5)
                                 .foregroundColor(.white)
                         })
                         FixedWidthSpacer(length: 20)
-                        Slider(value: $state.progress, label: {
-                            Text("Sth")
-                        }, minimumValueLabel: {
-                            Text($state.currentTime.wrappedValue)
-                                .foregroundColor(.white)
-                        }, maximumValueLabel: {
-                            Text($state.remainingTime.wrappedValue)
-                                .foregroundColor(.white)
-                        }, onEditingChanged: { isEditing in
-                            if isEditing {
-                                stopTimer()
-                                state.isPlaying = false
-                            } else {
-                                startTimer()
-                                state.isPlaying = true
-                                callbacks.updateProgress?(state.progress)
-                            }
-                        })
-                        FixedWidthSpacer(length: 40)
-                    }
+                        CustomSlider(
+                            value: $viewModel.progress,
+                            minimumValueLabel: Text($viewModel.currentTime.wrappedValue).foregroundColor(.white),
+                            maximumValueLabel: Text($viewModel.remainingTime.wrappedValue).foregroundColor(.white),
+                            onEditingChanged: { isEditing in
+                                if isEditing {
+                                    stopTimer()
+                                    viewModel.isPlaying = false
+                                } else {
+                                    startTimer()
+                                    viewModel.isPlaying = true
+                                    callbacks.updateProgress?(viewModel.progress)
+                                }
+                            }, track: {
+                                Capsule()
+                                    .foregroundColor(.init(red: 0.9, green: 0.9, blue: 0.9))
+                                    .frame(width: max(0, proxy.size.width - 300), height: 5)
+                            }, fill: {
+                                Capsule()
+                                    .foregroundColor(.blue)
+                            }, thumb: {
+                                Image("thumb")
+                                    .resizable()
+                                    .shadow(radius: 20)
+                            }, thumbSize: CGSize(width: 20, height: 20)
+                        )
+                        Spacer()
+                }
                         .frame(height: 60)
-                        .background(LinearGradient(gradient: Styles.controlPanelGraident, startPoint: .top, endPoint: .bottom))
+                        .background(
+                            LinearGradient(gradient: Styles.controlPanelGraident, startPoint: .top, endPoint: .bottom)
+                                .opacity(0.8)
+                        )
                     Spacer()
                     HStack {
                         Spacer()
@@ -114,22 +127,25 @@ struct VideoPlayerView: View {
                                     BackwardButton()
                                         .onTapGesture {
                                             callbacks.seekBackward?()
+                                            viewModel.autoHideUI()
                                         }
                                     FixedWidthSpacer(length: 40)
                                     ZStack {
                                         PlayButton()
-                                            .opacity(state.isPlaying ? 0 : 1)
+                                            .opacity(viewModel.isPlaying ? 0 : 1)
                                         PauseButton()
-                                            .opacity(state.isPlaying ? 1 : 0)
+                                            .opacity(viewModel.isPlaying ? 1 : 0)
                                         TappableArea(width: 40, height: 40)
                                             .onTapGesture {
-                                                state.isPlaying.toggle()
+                                                viewModel.isPlaying.toggle()
+                                                viewModel.autoHideUI()
                                             }
                                     }
                                     FixedWidthSpacer(length: 40)
                                     ForwardButton()
                                         .onTapGesture {
                                             callbacks.seekForward?()
+                                            viewModel.autoHideUI()
                                         }
                                     FixedWidthSpacer(length: 20)
                                 }
@@ -139,7 +155,7 @@ struct VideoPlayerView: View {
                         Spacer()
                     }
                 }
-                .opacity(state.isControlsHidden ? 0 : 1)
+                .opacity(viewModel.isControlsHidden ? 0 : 1)
             }
             .onAppear {
                 isUnsupported = file.ext == .unknown
@@ -159,14 +175,16 @@ struct VideoPlayerView: View {
     }
     
     func stopTimer() {
-        state.timer?.invalidate()
+        viewModel.timer?.invalidate()
+        viewModel.cancelAutoHide()
     }
     
     func startTimer() {
-        state.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+        viewModel.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
             if let state = callbacks.getCurrentState?() {
-                self.state.process(state: state)
+                self.viewModel.process(state: state)
             }
         }
+        viewModel.autoHideUI()
     }
 }
