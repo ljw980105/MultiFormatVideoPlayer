@@ -28,6 +28,7 @@ struct VideoFile {
 
 enum VideoFileExtension: String {
     case mp4
+    case mov
     case mpg
     case avi
     case m4v

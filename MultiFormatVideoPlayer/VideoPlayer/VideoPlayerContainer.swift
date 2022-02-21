@@ -46,6 +46,7 @@ final class VideoPlayerContainer: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: VideoPlayerContainerViewController, context: Context) {
         if vc == nil {
             vc = uiViewController
+            // Due to a bug with SwiftUI's onDisappear we have to use UIKit's viewWillDisappear
             vc?.onDisappear = { [weak self] in
                 guard let self = self,
                         let currentTime = self.vc?.currentState.currentTime  else { return }
