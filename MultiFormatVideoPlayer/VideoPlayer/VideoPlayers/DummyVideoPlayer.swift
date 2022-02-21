@@ -40,6 +40,10 @@ class DummyVideoPlayer: UIView, VideoPlayable {
         
     }
     
+    func seekToLastPlayTime() {
+        
+    }
+    
     var currentState: VideoPlayerPlayheadState {
         .default
     }

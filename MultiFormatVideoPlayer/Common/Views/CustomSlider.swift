@@ -8,6 +8,37 @@
 import SwiftUI
 
 /// [Source](https://swiftuirecipes.com/blog/custom-slider-in-swiftui)
+/// Sample:
+/// ```
+/// CustomSlider(
+/// value: $viewModel.progress,
+/// minimumValueLabel: Text($viewModel.currentTime.wrappedValue.timeString)
+///     .foregroundColor(.white),
+/// maximumValueLabel: Text($viewModel.remainingTime.wrappedValue.timeString)
+///     .foregroundColor(.white),
+/// onEditingChanged: { isEditing in
+///     if isEditing {
+///         stopTimer()
+///         viewModel.isPlaying = false
+///    } else {
+///        startTimer()
+///       viewModel.isPlaying = true
+///       callbacks.updateProgress?(viewModel.progress)
+///    }
+/// }, track: {
+///    Capsule()
+///        .foregroundColor(.init(red: 0.9, green: 0.9, blue: 0.9))
+///        .frame(width: max(0, proxy.size.width - 300), height: 5)
+/// }, fill: {
+///     Capsule()
+///         .foregroundColor(.blue)
+/// }, thumb: {
+///    Image("thumb")
+///        .resizable()
+///        .shadow(radius: 20)
+/// }, thumbSize: CGSize(width: 20, height: 20)
+/// )
+/// ```
 struct CustomSlider<Value, Track, Fill, Thumb>: View
 where Value: BinaryFloatingPoint, Value.Stride: BinaryFloatingPoint, Track: View, Fill: View, Thumb: View {
     /// the value of the slider, inside `bounds`

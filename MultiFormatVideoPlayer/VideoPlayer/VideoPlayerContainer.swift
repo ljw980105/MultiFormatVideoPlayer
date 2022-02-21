@@ -44,7 +44,14 @@ final class VideoPlayerContainer: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: VideoPlayerContainerViewController, context: Context) {
-        vc = uiViewController
+        if vc == nil {
+            vc = uiViewController
+            vc?.onDisappear = { [weak self] in
+                guard let self = self,
+                        let currentTime = self.vc?.currentState.currentTime  else { return }
+                ResumePlaybackManager.setPlaybackDuration(currentTime, for: self.videoFile)
+            }
+        }
         uiViewController.update(isPlaying: isPlaying)
     }
 }

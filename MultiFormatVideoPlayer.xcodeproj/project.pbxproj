@@ -34,6 +34,7 @@
 		045790AB27B60BE0007D2E0D /* CMTime+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */; };
 		045790AF27B768E1007D2E0D /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790AE27B768E0007D2E0D /* Double+Extensions.swift */; };
 		045790B127B771E3007D2E0D /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790B027B771E3007D2E0D /* CustomSlider.swift */; };
+		045790B827BDF88B007D2E0D /* ResumePlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045790B727BDF88B007D2E0D /* ResumePlaybackManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		045790AA27B60BE0007D2E0D /* CMTime+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMTime+Extensions.swift"; sourceTree = "<group>"; };
 		045790AE27B768E0007D2E0D /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		045790B027B771E3007D2E0D /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		045790B727BDF88B007D2E0D /* ResumePlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumePlaybackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +178,6 @@
 			children = (
 				0457907C27B4C564007D2E0D /* FileBrowserView.swift */,
 				0457907E27B4C578007D2E0D /* FileBrowserViewModel.swift */,
-				0457908027B4CC77007D2E0D /* VideoFile.swift */,
 			);
 			path = FileBrowser;
 			sourceTree = "<group>";
@@ -184,6 +185,7 @@
 		0457908227B4D675007D2E0D /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				045790B627BDF82A007D2E0D /* VideoFile */,
 				0457908727B4DDCE007D2E0D /* VideoPlayers */,
 				0457909427B55532007D2E0D /* Buttons */,
 				0457908327B4D725007D2E0D /* VideoPlayerView.swift */,
@@ -250,6 +252,15 @@
 				045790B027B771E3007D2E0D /* CustomSlider.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		045790B627BDF82A007D2E0D /* VideoFile */ = {
+			isa = PBXGroup;
+			children = (
+				0457908027B4CC77007D2E0D /* VideoFile.swift */,
+				045790B727BDF88B007D2E0D /* ResumePlaybackManager.swift */,
+			);
+			path = VideoFile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +408,7 @@
 				0457907D27B4C564007D2E0D /* FileBrowserView.swift in Sources */,
 				0457909D27B585CD007D2E0D /* FixedWidthSpacer.swift in Sources */,
 				045790A327B5D5BF007D2E0D /* VideoPlayerViewModel.swift in Sources */,
+				045790B827BDF88B007D2E0D /* ResumePlaybackManager.swift in Sources */,
 				045790A527B5FF28007D2E0D /* DummyVideoPlayer.swift in Sources */,
 				045790AF27B768E1007D2E0D /* Double+Extensions.swift in Sources */,
 				0457907F27B4C578007D2E0D /* FileBrowserViewModel.swift in Sources */,

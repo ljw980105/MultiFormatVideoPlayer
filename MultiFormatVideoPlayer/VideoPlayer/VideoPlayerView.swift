@@ -29,7 +29,6 @@ fileprivate enum Styles {
             .init(color: Color(red: 53/255, green: 97/255, blue: 213/255), location: 0.5)
         ])
     }
-    static var thumbRadius: CGFloat { 30 }
 }
 
 struct VideoPlayerView: View {
@@ -72,11 +71,17 @@ struct VideoPlayerView: View {
                                 .foregroundColor(.white)
                         })
                         FixedWidthSpacer(length: 20)
-                        CustomSlider(
-                            value: $viewModel.progress,
-                            minimumValueLabel: Text($viewModel.currentTime.wrappedValue).foregroundColor(.white),
-                            maximumValueLabel: Text($viewModel.remainingTime.wrappedValue).foregroundColor(.white),
-                            onEditingChanged: { isEditing in
+                        Slider(
+                                value: $viewModel.progress
+                            ) {
+                                Text("")
+                            } minimumValueLabel: {
+                                Text($viewModel.currentTime.wrappedValue.timeString)
+                                    .foregroundColor(.white)
+                            } maximumValueLabel: {
+                                Text($viewModel.remainingTime.wrappedValue.timeString)
+                                    .foregroundColor(.white)
+                            } onEditingChanged: { isEditing in
                                 if isEditing {
                                     stopTimer()
                                     viewModel.isPlaying = false
@@ -85,20 +90,8 @@ struct VideoPlayerView: View {
                                     viewModel.isPlaying = true
                                     callbacks.updateProgress?(viewModel.progress)
                                 }
-                            }, track: {
-                                Capsule()
-                                    .foregroundColor(.init(red: 0.9, green: 0.9, blue: 0.9))
-                                    .frame(width: max(0, proxy.size.width - 300), height: 5)
-                            }, fill: {
-                                Capsule()
-                                    .foregroundColor(.blue)
-                            }, thumb: {
-                                Image("thumb")
-                                    .resizable()
-                                    .shadow(radius: 20)
-                            }, thumbSize: CGSize(width: 20, height: 20)
-                        )
-                        Spacer()
+                            }
+                        FixedWidthSpacer(length: 20)
                 }
                         .frame(height: 60)
                         .background(

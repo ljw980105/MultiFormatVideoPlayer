@@ -28,6 +28,7 @@ class FileBrowserViewModel: ObservableObject {
     
     func deleteVideo(at indexSet: IndexSet) {
         let file = files[indexSet.index]
+        ResumePlaybackManager.deletePlaybackDuration(for: file)
         do {
             try FileManager.default.removeItem(at: file.url)
         } catch {

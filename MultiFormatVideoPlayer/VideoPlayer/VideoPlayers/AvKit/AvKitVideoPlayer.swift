@@ -73,4 +73,8 @@ class AvKitVideoPlayer: UIView, VideoPlayable {
             remainingTime: (totalDuration - currentTime).double
         )
     }
+    
+    func seekToLastPlayTime() {
+        player.seek(to: lastPlayTime.cmTime)
+    }
 }

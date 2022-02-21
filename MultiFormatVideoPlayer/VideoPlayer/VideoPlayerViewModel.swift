@@ -1,5 +1,5 @@
 //
-//  VideoPlayerState.swift
+//  VideoPlayerViewModel.swift
 //  MultiFormatVideoPlayer
 //
 //  Created by Jing Wei Li on 2/10/22.
@@ -11,8 +11,8 @@ import SwiftUI
 class VideoPlayerViewModel: ObservableObject {
     @Published var isPlaying = false
     @Published var progress: Double = 0
-    @Published var currentTime: String = "00:00:00"
-    @Published var remainingTime: String = "00:00:00"
+    @Published var currentTime: Double = 0
+    @Published var remainingTime: Double = 0
     @Published var isControlsHidden = false
     
     var timer: Timer?
@@ -20,8 +20,8 @@ class VideoPlayerViewModel: ObservableObject {
     
     func process(state: VideoPlayerPlayheadState) {
         progress = state.progress
-        currentTime = state.currentTime.timeString
-        remainingTime = state.remainingTime.timeString
+        currentTime = state.currentTime
+        remainingTime = state.remainingTime
     }
     
     func autoHideUI() {
@@ -39,5 +39,9 @@ class VideoPlayerViewModel: ObservableObject {
     
     func cancelAutoHide() {
         workItem?.cancel()
+    }
+    
+    func resumeFromLeftOff(videoFile: VideoFile) {
+        currentTime = ResumePlaybackManager.getPlaybackDuration(for: videoFile)
     }
 }
